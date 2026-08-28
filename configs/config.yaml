@@ -1,0 +1,67 @@
+# --- Thông tin dự án ---
+project_name: "Video_AI_Restoration_2026"
+version: "1.0.0"
+
+# --- Cấu hình phần cứng ---
+device: "cuda"          # Sử dụng 'cuda' cho GPU hoặc 'cpu'
+
+# --- Đường dẫn file ---
+paths:
+  input_video: "data/input/The_Great _Dictator.mp4"
+  output_dir: "data/output/"
+  checkpoint_denoise: "weights/video_restoration_net.pth"  # Phải khớp kiến trúc VideoRestorationNet
+  checkpoint_upscale: "weights/realesr-general-x4v3.pth"
+
+# --- Thông số xử lý Video ---
+processing:
+  frame_limit: 0        # 0 là xử lý toàn bộ, số dương để test thử vài khung hình
+  save_format: "mp4v"   # Định dạng nén video
+  upscale_factor: 2     # 2 = 720p→1440p (≈2K), 4 = 720p→2880p (≈4K, cần 8GB+ VRAM)
+  target_resolution: 1440  # Độ phân giải đầu ra (chiều cao): 720 / 1080 / 1440 / 2160. 0 = dùng upscale_factor
+  scene_threshold: 27.0 # Mức 27-30 là ổn định nhất cho phim hoạt hình/hành động
+  max_denoise_size: 1280 # Giới hạn chiều dài cạnh dài nhất khi đưa vào model khử nhiễu (4GB VRAM an toàn)
+
+# --- Tô màu video đen trắng (chạy trên CPU, không tốn VRAM) ---
+colorization:
+  enabled: auto        # 'auto' = tự phát hiện, true = luôn bật, false = tắt
+  weights_dir: "weights/colorization"  # Tự động tải về lần đầu chạy
+
+# --- Phân tích cảnh và điều chỉnh màu theo ngữ cảnh ---
+scene_aware:
+  enabled: true          # Phát hiện: đêm / cháy nổ / ngoài trời / hoạt hình
+  animation_style: true  # Xử lý chuyên biệt cho hoạt hình (bilateral + saturation boost)
+
+# --- Làm mượt màu theo thời gian (chống flickering trong cảnh hỗn loạn) ---
+temporal_consistency:
+  enabled: true
+  alpha: 0.75   # 0.5 = làm mượt mạnh, 0.9 = nhẹ. Khuyến nghị 0.7-0.8 cho cảnh hành động
+
+# --- Chỉnh màu hậu kỳ (Post-processing — chạy trên CPU, không tốn VRAM) ---
+color_correction:
+  enabled: true
+  white_balance: true       # Cân bằng trắng tự động (Gray World)
+  saturation_factor: 1.15   # Tăng bão hòa 15% (khử nhiễu thường làm nhạt màu). 0 = tắt
+  auto_contrast: false      # Kéo giãn tương phản. Bật nếu video gốc bị xám
+  contrast_clip: 1.0        # % pixel bị cắt hai đầu histogram (chỉ dùng khi auto_contrast: true)
+
+# --- Tham số mô hình (Hyperparameters) ---
+model_settings:
+  temporal_window: 5    # Số khung hình A.I. nhìn cùng lúc (3 cho hành động, 5 cho tĩnh)
+
+# --- Cấu hình Training ---
+training:
+  clean_video_dir: "data/train/clean"   # Đặt video chất lượng cao ở đây
+  patch_size: 256           # Kích thước crop ngẫu nhiên (256 = an toàn cho 4GB VRAM)
+  batch_size: 2             # Batch size (2 cho 4GB VRAM với FP16)
+  epochs: 150
+  learning_rate: 0.0001     # AdamW learning rate
+  weight_decay: 0.0001
+  noise_level: "medium"     # 'light', 'medium', 'heavy'
+  max_frames_per_video: 500 # Giới hạn frame mỗi video khi trích xuất
+  num_workers: 2            # Số worker cho DataLoader
+  grad_accumulation: 2      # Tích lũy gradient = effective batch 4
+  save_every: 5             # Lưu checkpoint mỗi N epoch
+  resume: true             # true = tiếp tục từ checkpoint cũ
+  l1_weight: 1.0            # Trọng số loss chi tiết
+  ssim_weight: 0.5          # Trọng số loss cấu trúc
+  color_weight: 0.3         # Trọng số loss màu sắc (tăng nếu cần chỉnh màu mạnh hơn)

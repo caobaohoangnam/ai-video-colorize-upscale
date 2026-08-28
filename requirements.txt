@@ -1,0 +1,30 @@
+# --- Core Deep Learning Framework ---
+torch>=2.4.0
+torchvision>=0.19.0
+torchaudio
+
+# --- Video & Image Processing ---
+opencv-python>=4.10.0
+numpy>=1.26.0
+Pillow>=10.0.0
+scikit-image>=0.22.0
+
+# --- A.I. Models Specific (Transformers & Diffusion) ---
+einops>=0.7.0          # Cực kỳ quan trọng cho các mô hình Transformer như RVRT
+timm>=0.9.0            # Thư viện chứa các backbone cho Computer Vision
+diffusers>=0.30.0      # Nếu bạn dùng mô hình Diffusion để chỉnh màu
+accelerate>=0.33.0     # Tối ưu hóa tốc độ chạy trên GPU
+
+# --- Super Resolution & Scene Detection ---
+realesrgan>=0.3.0      # Bộ upscale Real-ESRGAN (dùng trong upscale_utils.py)
+basicsr>=1.4.2         # Kiến trúc mạng cơ bản (RRDBNet, v.v.)
+scenedetect[opencv]>=0.6.0  # Phát hiện chuyển cảnh (dùng trong video_utils.py)
+
+# --- Utilities & Tools ---
+tqdm>=4.66.0           # Hiển thị thanh tiến trình xử lý video
+pyyaml>=6.0.0          # Đọc file cấu hình .yaml
+scipy>=1.12.0          # Các phép toán khoa học bổ trợ
+matplotlib>=3.8.0      # Vẽ biểu đồ hoặc kiểm tra kết quả (nếu cần)
+
+# --- Performance Optimization ---
+tensorboard>=2.15.0    # Theo dõi quá trình nếu bạn tự huấn luyện (train) lại
