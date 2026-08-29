@@ -48,7 +48,7 @@ pip install -r requirements.txt
 ```
 
 Model weights are **not included in this Git repo** (too large for GitHub's limits). You'll need to obtain them before running:
-- `weights/video_restoration_net.pth` — self-trained denoising/deblurring model. **[Download here](#)** (link to be updated once uploaded to a GitHub Release).
+- `weights/video_restoration_net.pth` — self-trained denoising/deblurring model. **[Download here](https://github.com/caobaohoangnam/ai-video-colorize-upscale/releases/download/v1.0.0/video_restoration_net.pth)** (or the [best checkpoint](https://github.com/caobaohoangnam/ai-video-colorize-upscale/releases/download/v1.0.0/video_restoration_net_best.pth), trained for 150 epochs — see the [v1.0.0 release](https://github.com/caobaohoangnam/ai-video-colorize-upscale/releases/tag/v1.0.0)).
 - `weights/realesr-general-x4v3.pth` — Real-ESRGAN super-resolution model. Download from [Real-ESRGAN releases](https://github.com/xinntao/Real-ESRGAN/releases) (the `realesr-general-x4v3.pth` file).
 - `weights/colorization/` — black-and-white colorization model, **downloaded automatically on first run** (no manual download needed).
 
