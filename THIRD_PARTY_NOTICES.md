@@ -1,13 +1,13 @@
 # Third-Party Notices
 
-Dự án này sử dụng các thư viện và mô hình pretrained mã nguồn mở của bên thứ ba. Theo yêu cầu của các giấy phép tương ứng, thông báo bản quyền gốc được liệt kê đầy đủ dưới đây. Các giấy phép này đều cho phép sử dụng thương mại; điều kiện chung là giữ nguyên các thông báo bản quyền này khi phân phối lại phần mềm.
+This project uses open-source third-party libraries and pretrained models. As required by their respective licenses, the original copyright notices are reproduced in full below. All of these licenses permit commercial use; the common condition is that these notices be retained upon redistribution of the software.
 
 ---
 
-## 1. Real-ESRGAN (nâng cấp độ phân giải)
+## 1. Real-ESRGAN (resolution upscaling)
 
-- **Thành phần dùng trong dự án**: `weights/realesr-general-x4v3.pth`, tích hợp qua `utils/upscale_utils.py`
-- **Nguồn**: https://github.com/xinntao/Real-ESRGAN
+- **Component used in this project**: `weights/realesr-general-x4v3.pth`, integrated via `utils/upscale_utils.py`
+- **Source**: https://github.com/xinntao/Real-ESRGAN
 - **License**: BSD 3-Clause License
 
 ```
@@ -45,10 +45,10 @@ POSSIBILITY OF SUCH DAMAGE.
 
 ---
 
-## 2. BasicSR (kiến trúc mạng RRDBNet, dùng làm nền tảng cho Real-ESRGAN)
+## 2. BasicSR (RRDBNet architecture, underlying Real-ESRGAN)
 
-- **Thành phần dùng trong dự án**: kiến trúc mạng import trong `utils/upscale_utils.py` (`basicsr.archs.rrdbnet_arch.RRDBNet`)
-- **Nguồn**: https://github.com/XPixelGroup/BasicSR
+- **Component used in this project**: network architecture imported in `utils/upscale_utils.py` (`basicsr.archs.rrdbnet_arch.RRDBNet`)
+- **Source**: https://github.com/XPixelGroup/BasicSR
 - **License**: Apache License 2.0
 
 ```
@@ -67,14 +67,14 @@ See the License for the specific language governing permissions and
 limitations under the License.
 ```
 
-Toàn văn Apache License 2.0: https://www.apache.org/licenses/LICENSE-2.0
+Full text of the Apache License 2.0: https://www.apache.org/licenses/LICENSE-2.0
 
 ---
 
 ## 3. Colorization Model — Zhang, Isola, Efros (2016)
 
-- **Thành phần dùng trong dự án**: `weights/colorization/colorization_release_v2.caffemodel`, `colorization_deploy_v2.prototxt`, `pts_in_hull.npy`, tích hợp qua `utils/colorize_utils.py`
-- **Nguồn**: https://github.com/richzhang/colorization
+- **Component used in this project**: `weights/colorization/colorization_release_v2.caffemodel`, `colorization_deploy_v2.prototxt`, `pts_in_hull.npy`, integrated via `utils/colorize_utils.py`
+- **Source**: https://github.com/richzhang/colorization
 - **License**: BSD 2-Clause License
 
 ```
@@ -103,10 +103,10 @@ OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 ```
 
-Ghi chú: tác giả gốc yêu cầu trích dẫn (citation) khi công trình được dùng cho mục đích nghiên cứu — đây là đề nghị học thuật, không phải điều khoản pháp lý bắt buộc theo giấy phép BSD-2-Clause ở trên.
+Note: the original authors request a citation when this work is used for research purposes — this is an academic courtesy, not a legal requirement under the BSD-2-Clause license above.
 
 ---
 
-## Phần mã nguồn tự phát triển
+## Original Project Code
 
-Toàn bộ mã còn lại trong dự án (`main.py`, `train.py`, `evaluate.py`, `models/network.py`, các file trong `utils/` ngoại trừ phần tích hợp model bên thứ ba nêu trên) do tác giả dự án tự viết và huấn luyện, không chịu ràng buộc bởi các giấy phép trên.
+All remaining code in this project (`main.py`, `train.py`, `evaluate.py`, `models/network.py`, and the files in `utils/` other than the third-party model integrations noted above) was written and trained by the project's author and is not subject to the licenses above.
